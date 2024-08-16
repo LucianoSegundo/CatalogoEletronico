@@ -32,6 +32,7 @@ public class CategoriaService {
 		return lista;
 	}
 	
+	@Transactional(readOnly = true)
 	public CategoriaDTO retornarCategoria(Long id) {
 		var resposta = categoriaRepo.findById(id);
 		// se o objeto não estver no banco será lançada uma excessão
@@ -39,4 +40,12 @@ public class CategoriaService {
 		return new CategoriaDTO(categoria);
 		
 		}
+	@Transactional
+	public CategoriaDTO inserirCategoria(CategoriaDTO dto) {
+		Categoria categoria = new Categoria();
+		categoria.setNome(dto.getNome());
+		categoria = categoriaRepo.save(categoria);
+		
+		return new CategoriaDTO(categoria);
+	}
 }
